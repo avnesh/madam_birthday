@@ -421,13 +421,20 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 15px;
+  /* Ensure the track name doesn't push elements out */
+  max-width: 90vw;
 }
 
 #trackName {
   color: var(--deep-red);
   font-weight: 600;
   margin-left: 12px;
-  min-width: 200px;
+  /* Use max-width to allow wrapping on smaller screens */
+  max-width: 150px; 
+  min-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* --- Mobile Responsiveness --- */
