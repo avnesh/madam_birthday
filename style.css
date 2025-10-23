@@ -1,16 +1,16 @@
 /* Enhanced CSS with Tailwind-like utilities and custom styles */
 @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
 
-/* Custom CSS Variables - Romantic Theme */
+/* Custom CSS Variables - ROMANTIC GOLD Theme */
 :root {
-  --primary-pink: #ff69b4;
-  --secondary-pink: #ffb6c1;
-  --light-pink: #ffd1dc;
-  --dark-pink: #c2185b;
-  --rose-gold: #e8b4b8;
-  --romantic-purple: #dda0dd;
-  --gradient-bg: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 25%, #ffd1dc 50%, #ffb6c1 75%, #ffffff 100%);
-  --romantic-shadow: 0 8px 32px rgba(255, 105, 180, 0.15);
+  --primary-pink: #FF69B4; /* Hot Pink */
+  --secondary-pink: #FFC0CB; /* Light Pink */
+  --deep-red: #C71585; /* Deep Crimson */
+  --gold-accent: #FFD700; /* Gold */
+  --text-dark: #333333;
+  --text-light: #FFFFFF;
+  --gradient-bg: linear-gradient(135deg, #FFF0F5 0%, #FFFAFA 50%, #FFF0F5 100%); /* Soft Pink/White Gradient */
+  --romantic-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
 }
 
 /* Base Styles */
@@ -26,9 +26,11 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   position: relative;
+  overflow-x: hidden;
+  color: var(--text-dark); /* Default text color is dark */
 }
 
-/* Romantic floating hearts animation */
+/* Background Hearts/Bubbles */
 body::before {
   content: '';
   position: fixed;
@@ -37,24 +39,29 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 60%, rgba(221, 160, 221, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 10% 90%, rgba(255, 192, 203, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.2) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
+  animation: backgroundTwinkle 30s linear infinite;
+}
+
+@keyframes backgroundTwinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
 }
 
 /* Typography */
 .script-heading { 
   font-family: 'Dancing Script', cursive; 
-  color: var(--dark-pink);
+  color: var(--deep-red);
   font-weight: 700;
-  text-shadow: 0 2px 8px rgba(194, 24, 91, 0.2);
+  text-shadow: 0 4px 8px rgba(199, 21, 133, 0.3);
   position: relative;
 }
 
 .script-heading::after {
-  content: '💕';
+  content: '💖';
   position: absolute;
   right: -40px;
   top: -10px;
@@ -64,102 +71,74 @@ body::before {
 
 /* Button Styles */
 .btn-primary { 
-  background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink), var(--romantic-purple));
-  color: #fff;
-  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-pink) 0%, var(--deep-red) 100%);
+  color: var(--text-light);
+  padding: 0.75rem 1.8rem;
   border-radius: 50px;
   border: none;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: var(--romantic-shadow);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
   text-decoration: none;
   display: inline-block;
   position: relative;
   overflow: hidden;
 }
 
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.5s;
-}
-
-.btn-primary:hover::before {
-  left: 100%;
-}
-
 .btn-primary:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(199, 21, 133, 0.6);
 }
 
 .btn-secondary { 
   background: transparent; 
   border: 2px solid var(--primary-pink); 
   color: var(--primary-pink);
-  padding: 0.6rem 1.2rem; 
+  padding: 0.75rem 1.8rem; 
   border-radius: 50px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   text-decoration: none;
   display: inline-block;
 }
 
 .btn-secondary:hover {
   background: var(--primary-pink);
-  color: white;
-  transform: translateY(-2px);
+  color: var(--text-light);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
 }
 
 /* Photo Cards */
 .photo-card { 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: white;
+  border: 4px solid transparent; 
   position: relative; 
   overflow: hidden; 
   border-radius: 20px; 
-  box-shadow: var(--romantic-shadow);
-  transition: all 0.4s ease;
-  background: white;
-  border: 2px solid transparent;
-}
-
-.photo-card::before {
-  content: '💖';
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.2em;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-}
-
-.photo-card:hover::before {
-  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
 }
 
 .photo-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2);
+  box-shadow: 0 25px 50px rgba(255, 105, 180, 0.4);
   border-color: var(--primary-pink);
 }
 
 .photo-card img { 
+  filter: none; 
   width: 100%; 
-  height: 260px; 
+  height: 280px; 
   object-fit: cover; 
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
 .photo-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .photo-card .caption { 
@@ -167,13 +146,14 @@ body::before {
   bottom: 0; 
   left: 0; 
   right: 0; 
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
   color: #fff; 
-  padding: 20px 16px 16px;
-  transform: translateY(100%); 
-  transition: transform 0.3s ease;
-  font-size: 14px;
-  line-height: 1.4;
+  padding: 25px 18px 18px; 
+  transform: translateY(calc(100% - 20px));
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .photo-card:hover .caption { 
@@ -183,224 +163,243 @@ body::before {
 /* Balloon Area */
 .balloon-area { 
   position: relative; 
-  height: 300px; 
-  background: linear-gradient(180deg, rgba(255, 182, 193, 0.1) 0%, transparent 100%);
-  border-radius: 20px;
-  margin: 20px 0;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 25px;
+  margin: 30px 0;
+  box-shadow: inset 0 0 10px rgba(255, 105, 180, 0.2);
+  overflow: hidden; 
+  border: 1px solid rgba(255, 192, 203, 0.5);
 }
 
+/* Balloon Redesign (The **proper** party balloon fix) */
 .balloon { 
   width: 80px; 
   height: 100px; 
-  border-radius: 50px 50px 50px 50px; 
-  background: linear-gradient(180deg, var(--secondary-pink), var(--primary-pink));
+  border-radius: 80% 80% 80% 80% / 90% 90% 100% 100%;
   position: absolute; 
   bottom: 0; 
   cursor: pointer; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  box-shadow: 0 8px 20px rgba(255, 155, 179, 0.3);
   transform-origin: center bottom; 
-  transition: all 0.3s ease;
-  animation: float 3s ease-in-out infinite;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: float 5s ease-in-out infinite alternate;
+  /* Key change: radial gradient for spherical light and glossy look */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), /* Soft shadow */
+              inset 5px 5px 15px rgba(255, 255, 255, 0.5), /* Highlight */
+              inset -5px -5px 15px rgba(0, 0, 0, 0.1); /* Shading */
 }
 
-.balloon:nth-child(odd) {
-  animation-delay: 0.5s;
+/* Balloon Glossy Highlight */
+.balloon::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    filter: blur(2px);
+    opacity: 0.8;
+    z-index: 2; /* Ensure it's above the knot */
 }
 
-.balloon:nth-child(even) {
-  animation-delay: 1s;
+/* Balloon Knot */
+.balloon::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--deep-red);
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  z-index: 3;
 }
+
+/* Balloon String (Thread) - Adjusted to work with innerHTML injection */
+.balloon-string {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: 300px;
+  background: rgba(199, 21, 133, 0.5); 
+  z-index: 0;
+  transform: translateX(-50%);
+}
+
+/* Balloon Colors for Romantic Theme */
+.balloon-color-1 { background: radial-gradient(circle at 30% 30%, #FFB6C1, #FF69B4); } /* Pink */
+.balloon-color-2 { background: radial-gradient(circle at 30% 30%, #FFD700, #F0C419); } /* Gold */
+.balloon-color-3 { background: radial-gradient(circle at 30% 30%, #dda0dd, #C71585); } /* Purple/Red */
+.balloon-color-4 { background: radial-gradient(circle at 30% 30%, #ADD8E6, #6495ED); } /* Light Blue (for contrast) */
+
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.balloon:hover {
-  transform: scale(1.1);
+  0% { transform: translateY(0px) rotate(-1deg); }
+  100% { transform: translateY(-50px) rotate(1deg); }
 }
 
 .balloon.pop { 
-  transform: scale(0.6) translateY(-30px); 
+  transform: scale(0.2) translateY(-100px); 
   opacity: 0;
-  animation: pop 0.5s ease-out;
+  animation: pop 0.3s ease-out forwards;
 }
 
 @keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(0.6) translateY(-30px); }
+  0% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.1); opacity: 0; }
 }
 
-.wish { 
-  font-size: 12px; 
-  display: block; 
-  padding: 8px;
-  color: white;
-  font-weight: 600;
-  text-align: center;
+.wish-pop {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    opacity: 0;
+    pointer-events: none;
+    font-weight: 800;
+    color: var(--deep-red);
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.9);
+    animation: wishFlyUp 1.5s ease-out forwards;
+    font-size: 1.5rem;
+    white-space: nowrap;
 }
 
-/* Heart Buttons */
+@keyframes wishFlyUp {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
+}
+
+
+/* Heart Buttons - Message inside button fix */
 .heart-btn { 
-  background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(255, 105, 180, 0.1)); 
-  border: 2px solid var(--primary-pink); 
-  border-radius: 20px; 
-  font-size: 2rem; 
-  padding: 16px; 
+  background: rgba(255, 255, 255, 0.9);
+  border: 4px solid var(--primary-pink); 
+  border-radius: 25px; 
+  font-size: 2.5rem; 
+  padding: 20px; 
   cursor: pointer; 
-  transition: all 0.4s ease;
-  color: var(--primary-pink);
-  min-height: 80px;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: var(--deep-red);
+  min-height: 100px;
+  box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-}
-
-.heart-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(255, 105, 180, 0.3) 0%, transparent 70%);
-  transition: all 0.3s ease;
-  transform: translate(-50%, -50%);
-}
-
-.heart-btn:hover::before {
-  width: 100px;
-  height: 100px;
 }
 
 .heart-btn:hover {
-  background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
-  color: white;
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: var(--romantic-shadow);
+  background: var(--primary-pink);
+  color: var(--text-light);
 }
 
 .heart-btn.revealed { 
-  transform: scale(0.9); 
-  opacity: 0.8;
-  background: linear-gradient(135deg, var(--light-pink), var(--rose-gold));
-  border-color: var(--secondary-pink);
-  color: var(--dark-pink);
+  background: var(--secondary-pink); 
+  border-color: var(--deep-red);
+  color: var(--text-dark);
+  cursor: default;
+}
+
+.heart-message-overlay {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--deep-red);
+    text-align: center;
+    line-height: 1.2;
+    padding: 0 5px;
+    z-index: 10;
+}
+.heart-btn.revealed:hover {
+    transform: none; /* Disable hover effect when revealed */
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+}
+
+/* Music Player */
+.player { 
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--secondary-pink);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  border-radius: 50px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
+
+#trackName {
+  color: var(--deep-red);
+  font-weight: 600;
+  margin-left: 12px;
 }
 
 /* Glow Heart */
 .glow-heart { 
-  background: linear-gradient(135deg, var(--primary-pink), var(--light-pink));
-  border-radius: 50%; 
-  font-size: 3rem; 
-  padding: 30px; 
-  border: none; 
-  box-shadow: 0 15px 40px rgba(255, 155, 179, 0.4);
+  background: radial-gradient(circle, #FFD700 0%, var(--gold-accent) 100%);
+  color: var(--deep-red);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 215, 0, 0.7);
+  border-radius: 50%;
+  font-size: 4rem; 
+  padding: 40px; 
+  border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: white;
-  animation: pulse 2s infinite;
+  animation: pulse 2s infinite ease-in-out;
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 215, 0, 0.7); }
+  50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.9); }
 }
 
-.glow-heart:hover {
-  transform: scale(1.1);
-  box-shadow: 0 20px 50px rgba(255, 155, 179, 0.6);
+/* Typed Message Container */
+.typed-message-container {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.1);
+    border: 1px solid var(--secondary-pink);
+    color: var(--text-dark);
+    padding: 30px;
+    border-radius: 15px;
 }
 
-/* Utility Classes */
-.hidden { 
-  display: none; 
-}
-
-.player { 
-  background: rgba(255,255,255,0.95);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-}
-
-.player:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-
-/* Navigation */
-.nav-links a {
-  color: var(--dark-pink);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  padding: 8px 16px;
-  border-radius: 20px;
-}
-
-.nav-links a:hover {
-  color: var(--primary-pink);
-  background: rgba(255, 182, 193, 0.1);
-}
-
-/* Typed.js cursor */
 .typed-cursor {
-  opacity: 1;
-  animation: typedjsBlink 1s infinite;
+  color: var(--deep-red);
 }
 
-@keyframes typedjsBlink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+/* Playlist Styling */
+.playlist-container {
+    text-align: left;
 }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .script-heading {
-    font-size: 2.5rem;
-  }
-  
-  .balloon {
-    width: 60px;
-    height: 80px;
-  }
-  
-  .heart-btn {
-    font-size: 1.5rem;
-    padding: 12px;
-    min-height: 60px;
-  }
-  
-  .glow-heart {
-    font-size: 2.5rem;
-    padding: 25px;
-  }
+.playlist-item {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 5px solid transparent;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
-/* Loading Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.playlist-item:hover {
+    background: rgba(255, 192, 203, 0.3);
 }
-
-.fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
+.playlist-item.active {
+    background: var(--primary-pink);
+    color: white;
+    font-weight: 700;
+    border-left: 5px solid var(--gold-accent);
+}
+.playlist-item.active .play-icon {
+    color: var(--gold-accent);
+}
+.play-icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: var(--primary-pink);
+    transition: color 0.2s ease;
 }

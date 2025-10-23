@@ -9,7 +9,7 @@
 <script src="assets/libs/typed.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+<body class="min-h-screen font-poppins">
 <nav class="p-4 container mx-auto flex justify-between items-center">
 <a href="index.html" class="text-sm">Home</a>
 <div class="nav-links space-x-4">
@@ -22,21 +22,27 @@
 
 <main class="container mx-auto p-6 text-center">
   <h2 class="script-heading text-4xl">Dear Madam,</h2>
-  <div class="mt-6 max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 fade-in-up">
+  <div class="mt-6 max-w-3xl mx-auto rounded-xl shadow-lg p-6 fade-in-up typed-message-container">
     <div id="typed" class="text-xl leading-relaxed"></div>
+  </div>
+  
+  <h3 class="script-heading text-2xl mt-10">Choose Your Melody 🎶</h3>
+  <div class="mt-4 max-w-lg mx-auto p-4 rounded-xl shadow-lg typed-message-container playlist-container">
+      <div id="playlistList" class="space-y-2">
+          </div>
   </div>
 
   <div class="mt-10">
-    <a href="funzone.html" class="btn-primary">Next: Play</a>
+    <a href="funzone.html" class="btn-primary">Next Page: Fun Zone</a>
   </div>
 </main>
 
 <footer class="fixed bottom-6 left-1/2 transform -translate-x-1/2">
-  <div id="player" class="player px-4 py-3 rounded-full shadow-md" style="width:auto;height:auto;border-radius:9999px;">
-    <button id="prevTrack" aria-label="Previous" class="btn-secondary" style="margin-right:8px;">⏮</button>
-    <button id="playToggle" aria-label="Play/Pause" class="btn-primary" style="margin-right:8px;">▶</button>
+  <div id="player" class="player">
+    <button id="prevTrack" aria-label="Previous" class="btn-secondary">⏮</button>
+    <button id="playToggle" aria-label="Play/Pause" class="btn-primary">▶</button>
     <button id="nextTrack" aria-label="Next" class="btn-secondary">⏭</button>
-    <span id="trackName" style="margin-left:12px;font-weight:600;color:#c2185b;">Loading...</span>
+    <span id="trackName">Loading...</span>
   </div>
 </footer>
 
@@ -57,60 +63,151 @@ backDelay: 1500,
 loop: false
 });
 
-// Playlist player logic
-let playlist = [];
-let currentIndex = 0;
-const audio = document.getElementById('bgAudio');
-const trackName = document.getElementById('trackName');
-const playBtn = document.getElementById('playToggle');
-const prevBtn = document.getElementById('prevTrack');
-const nextBtn = document.getElementById('nextTrack');
+// Playlist player logic - Centralized and modified for list display
+const musicPlayer = {
+    playlist: [],
+    currentIndex: 0,
+    audio: document.getElementById('bgAudio'),
+    trackName: document.getElementById('trackName'),
+    playBtn: document.getElementById('playToggle'),
+    prevBtn: document.getElementById('prevTrack'),
+    nextBtn: document.getElementById('nextTrack'),
+    playlistList: document.getElementById('playlistList'),
+    // Only 'birthday.mp3' is available, mark the others as unavailable
+    availableTracks: ['birthday.mp3'], 
 
-function loadTrack(index){
-  const item = playlist[index];
-  if(!item) return;
-  audio.src = 'assets/music/' + item.file;
-  trackName.textContent = item.title;
-}
+    loadTrack(index, autoPlay = true){
+      if(index < 0 || index >= this.playlist.length) return;
+      this.currentIndex = index;
+      const item = this.playlist[this.currentIndex];
+      
+      const isAvailable = this.availableTracks.includes(item.file);
+      
+      if(isAvailable) {
+          this.audio.src = 'assets/music/' + item.file;
+          if (autoPlay) {
+              this.play();
+          } else {
+              window.pauseBackgroundAudio();
+          }
+      } else {
+          this.audio.pause();
+          this.audio.src = 'assets/music/birthday.mp3'; // Fallback source to prevent error
+          window.pauseBackgroundAudio();
+          alert(`Sorry, the file for "${item.title}" is missing! Please upload "assets/music/${item.file}".`);
+      }
+      
+      this.trackName.textContent = item.title;
+      sessionStorage.setItem('currentTrackIndex', this.currentIndex);
+      this.updatePlaylistUI();
+    },
 
-function play(){ audio.play(); playBtn.textContent = '⏸'; }
-function pause(){ audio.pause(); playBtn.textContent = '▶'; }
+    play(){ 
+        const currentTrack = this.playlist[this.currentIndex];
+        if (currentTrack && this.availableTracks.includes(currentTrack.file)) {
+             window.playBackgroundAudio();
+        }
+    },
 
-playBtn.addEventListener('click', ()=>{ audio.paused ? play() : pause(); });
-prevBtn.addEventListener('click', ()=>{
-  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-  loadTrack(currentIndex);
-  play();
-});
-nextBtn.addEventListener('click', ()=>{
-  currentIndex = (currentIndex + 1) % playlist.length;
-  loadTrack(currentIndex);
-  play();
-});
+    pause(){ 
+        window.pauseBackgroundAudio();
+    },
 
-audio.addEventListener('ended', ()=>{
-  currentIndex = (currentIndex + 1) % playlist.length;
-  loadTrack(currentIndex);
-  play();
-});
+    updatePlaylistUI() {
+        if(!this.playlistList || !this.playlist.length) return;
+        
+        const isCurrentlyPlaying = !this.audio.paused && sessionStorage.getItem('bgPlaying') === '1';
+        
+        this.playlistList.innerHTML = '';
+        this.playlist.forEach((item, index) => {
+            const div = document.createElement('div');
+            const isActive = index === this.currentIndex;
+            const isPlaying = isActive && isCurrentlyPlaying;
+            const isAvailable = this.availableTracks.includes(item.file);
+            
+            let classList = 'playlist-item';
+            if(isActive) classList += ' active';
+            if(!isAvailable) classList += ' unavailable-track';
 
-// Load playlist from JSON
-async function loadPlaylist() {
-  try {
-    const response = await fetch('assets/music/playlist.json');
-    playlist = await response.json();
-    if (playlist.length > 0) {
-      loadTrack(currentIndex);
+            div.className = classList;
+            
+            let icon = isPlaying ? '&#x25B6;' : (isAvailable ? '&#x1F3B5;' : '&#x1F6AB;');
+            
+            div.innerHTML = `<span class="play-icon">${icon}</span>${item.title}`;
+            
+            div.onclick = () => {
+                if(!isAvailable) {
+                    alert(`Sorry, the file for "${item.title}" is missing!`);
+                    return;
+                }
+                
+                if (index === this.currentIndex) {
+                    this.audio.paused ? this.play() : this.pause();
+                } else {
+                    this.loadTrack(index);
+                }
+            };
+            this.playlistList.appendChild(div);
+        });
+    },
+
+    bindEvents() {
+        this.playBtn.addEventListener('click', () => { 
+            this.audio.paused ? this.play() : this.pause();
+            this.updatePlaylistUI();
+        });
+        
+        this.prevBtn.addEventListener('click', () => {
+          this.loadTrack((this.currentIndex - 1 + this.playlist.length) % this.playlist.length);
+        });
+        
+        this.nextBtn.addEventListener('click', () => {
+          this.loadTrack((this.currentIndex + 1) % this.playlist.length);
+        });
+
+        this.audio.addEventListener('ended', () => {
+          this.loadTrack((this.currentIndex + 1) % this.playlist.length);
+        });
+
+        this.audio.addEventListener('play', () => this.updatePlaylistUI());
+        this.audio.addEventListener('pause', () => this.updatePlaylistUI());
+        this.audio.addEventListener('loadedmetadata', () => this.updatePlaylistUI());
+    },
+
+    async loadPlaylist() {
+      try {
+        const response = await fetch('assets/music/playlist.json');
+        this.playlist = await response.json();
+        
+        const savedIndex = sessionStorage.getItem('currentTrackIndex');
+        let initialIndex = 0;
+        if (savedIndex !== null && !isNaN(parseInt(savedIndex)) && parseInt(savedIndex) < this.playlist.length) {
+            initialIndex = parseInt(savedIndex);
+        }
+        
+        const wasPlaying = sessionStorage.getItem('bgPlaying') === '1';
+
+        if (this.playlist.length > 0) {
+          this.loadTrack(initialIndex, wasPlaying);
+        } else {
+            this.trackName.textContent = 'No Playlist Found';
+            this.updatePlaylistUI();
+        }
+
+      } catch (error) {
+        this.trackName.textContent = 'Error fetching playlist';
+        this.updatePlaylistUI();
+      }
+    },
+    
+    init() {
+        this.loadPlaylist();
+        this.bindEvents();
     }
-  } catch (error) {
-    console.log('Using fallback playlist');
-    playlist = [{ title: 'Birthday Melody', file: 'birthday.mp3' }];
-    loadTrack(currentIndex);
-  }
-}
+};
 
 document.addEventListener('DOMContentLoaded', ()=>{
-  loadPlaylist();
+  musicPlayer.init();
 });
 </script>
 </body>

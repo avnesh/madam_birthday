@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+<body class="min-h-screen font-poppins">
   <nav class="p-4 container mx-auto flex justify-between items-center">
     <a href="index.html" class="text-sm">Home</a>
     <div class="nav-links space-x-4">
@@ -19,14 +19,14 @@
   </nav>
 
   <main class="container mx-auto p-6 text-center">
-    <h2 class="text-4xl script-heading">A Little Surprise</h2>
-    <p class="mt-4">Click the glowing heart to reveal a special message.</p>
+    <h2 class="text-4xl script-heading">A Special Surprise</h2>
+    <p class="mt-4 text-gray-600">Click the glowing heart to reveal a special message.</p>
 
     <div class="mt-8">
-      <button id="glowHeart" class="glow-heart">❤️</button>
+      <button id="glowHeart" class="glow-heart">🎁</button>
     </div>
 
-    <div id="secret" class="mt-6 hidden max-w-xl mx-auto text-lg">
+    <div id="secret" class="mt-6 hidden max-w-xl mx-auto text-lg typed-message-container">
       <p>Madam — your presence makes everything beautiful. Wishing you a year of boundless joy, love, and peace. With heartfelt gratitude, Mr Stark.</p>
       <div class="mt-6">
         <a href="thankyou.html" class="btn-primary">Finish</a>
@@ -34,11 +34,15 @@
     </div>
   </main>
 
+  <audio id="bgAudio" src="assets/music/birthday.mp3"></audio>
   <script src="script.js"></script>
   <script>
     document.getElementById('glowHeart').addEventListener('click', ()=>{
       document.getElementById('secret').classList.remove('hidden');
-      confetti({ particleCount: 100, spread: 80 });
+      // Confetti with theme colors
+      confetti({ particleCount: 150, spread: 150, origin: { y: 0.8 }, colors: ['#FF69B4', '#FFD700', '#C71585', '#FFF0F5'] });
+      // Change the button icon
+      document.getElementById('glowHeart').textContent = '❤️';
     });
   </script>
 </body>

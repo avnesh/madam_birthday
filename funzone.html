@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+<body class="min-h-screen font-poppins">
   <nav class="p-4 container mx-auto flex justify-between items-center">
     <a href="index.html" class="text-sm">Home</a>
     <div class="nav-links space-x-4">
@@ -19,115 +19,123 @@
 
   <main class="container mx-auto p-6 text-center">
     <h2 class="text-3xl font-semibold script-heading">Fun Zone</h2>
-    <p class="mt-2">Pop the balloons to reveal wishes or click hearts for sweet messages.</p>
+    <p class="mt-2 text-gray-600">Pop the balloons or click hearts for a romantic message.</p>
 
     <section class="mt-6">
-      <div id="balloonArea" class="balloon-area"></div>
+      <div id="balloonArea" class="balloon-area">
+        <div id="wishPopContainer"></div>
+      </div>
       <div class="mt-6 space-x-3">
         <button id="startBalloons" class="btn-primary">Spawn Balloons</button>
-        <button id="clearBalloons" class="btn-secondary">Clear</button>
-      </div>
-      <div class="mt-6 max-w-2xl mx-auto bg-white rounded-xl shadow p-4 text-left">
-        <h4 class="font-semibold mb-2">Wish Board</h4>
-        <ul id="wishBoard" class="list-disc list-inside text-sm text-gray-700"></ul>
       </div>
     </section>
 
-    <hr class="my-8"/>
+    <hr class="my-8 border-pink-300"/>
 
     <section>
-      <h3 class="text-2xl">Heart Reveal</h3>
-      <div class="grid grid-cols-3 gap-4 mt-4" id="heartGrid">
-        <!-- hearts populated by JS -->
-      </div>
-      
-      <!-- Beautiful Message Box for Heart Messages -->
-      <div id="heartMessageBox" class="mt-6 max-w-2xl mx-auto bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl shadow-lg p-6 border border-pink-200 hidden">
-        <div class="flex items-center justify-center mb-4">
-          <span class="text-4xl">💕</span>
+      <h3 class="text-2xl script-heading">Heart Reveal</h3>
+      <p class="mt-2 text-gray-600">Click each heart to reveal a message inside.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4" id="heartGrid">
         </div>
-        <div id="heartMessage" class="text-center text-lg font-medium text-gray-800"></div>
-        <button id="closeHeartMessage" class="mt-4 mx-auto block btn-secondary text-sm">Close</button>
-      </div>
     </section>
 
     <div class="mt-8">
-      <a id="afterFunNext" href="#" class="btn-secondary opacity-50 pointer-events-none">Next: Surprise</a>
+      <a id="afterFunNext" href="#" class="btn-primary opacity-50 pointer-events-none">Next Page: Surprise</a>
     </div>
   </main>
 
+  <audio id="bgAudio" src="assets/music/birthday.mp3"></audio>
   <script src="script.js"></script>
   <script>
-    // Balloon spawn & pop logic
     document.getElementById('startBalloons').addEventListener('click', () => spawnBalloons(6));
-    document.getElementById('clearBalloons').addEventListener('click', () => {
-      document.getElementById('balloonArea').innerHTML = '';
-      document.getElementById('wishBoard').innerHTML = '';
-      balloonsPopped = 0;
-      heartsRevealed = 0;
-      disableNext();
-    });
+    
+    // Element to display the persistent message
+    const wishPopContainer = document.getElementById('wishPopContainer');
 
     let balloonsPopped = 0;
     let heartsRevealed = 0;
     const wishes = [
-      'You are cherished ❤️',
+      'You are cherished 💖',
       'May your smile bloom forever ✨',
-      'Your kindness lights the way 💖',
+      'Your kindness lights the way 🌹',
       'Endless joy and peace to you 🌸',
       'Stay graceful and strong 🌟',
       'Keep shining bright 💫'
     ];
+    const balloonColors = ['balloon-color-1', 'balloon-color-2', 'balloon-color-3', 'balloon-color-4'];
+
     function spawnBalloons(n){
+      // Clear previous message on new spawn
+      wishPopContainer.innerHTML = '';
+      
       const area = document.getElementById('balloonArea');
-      area.innerHTML = '';
+      const existingBalloons = area.querySelectorAll('.balloon');
+      existingBalloons.forEach(b => b.remove());
+      
       for(let i=0;i<n;i++){
         const b = document.createElement('div');
-        b.className = 'balloon';
+        const colorClass = balloonColors[i % balloonColors.length];
+        const stringHtml = `<div class="balloon-string"></div>`; 
+        
+        b.className = 'balloon ' + colorClass;
         b.style.left = (8 + i*15) + '%';
-        b.style.animationDelay = (i * 0.2) + 's';
+        // Start lower to allow for greater ascent
+        b.style.bottom = '-' + (Math.random() * 50 + 10) + 'px'; 
+        b.style.animationDelay = (i * 0.4) + 's';
+        b.innerHTML = stringHtml;
+        
         b.addEventListener('click', ()=>{
           popBalloon(b, i);
         });
         area.appendChild(b);
       }
     }
+    
     function popBalloon(el, idx){
-      if(!el) return;
+      if(el.classList.contains('pop')) return;
+      
+      const wish = wishes[idx % wishes.length];
+
+      // 1. Clear previous message and display the new one persistently at the top
+      wishPopContainer.innerHTML = `<div class="wish-pop">${wish}</div>`;
+
+      // 2. Pop the balloon (remove the balloon entirely)
       el.classList.add('pop');
-      const msg = wishes[idx % wishes.length];
-      el.innerHTML = '<span class="wish">' + msg + '</span>';
-      addWishToBoard(msg);
+      el.removeEventListener('click', popBalloon);
+      setTimeout(() => el.remove(), 300);
+
+      // 3. Update game state
       balloonsPopped++;
-      if(balloonsPopped >= 5){
+      if(balloonsPopped >= 3 || heartsRevealed >= 3){ 
         enableNext();
       }
     }
-    function addWishToBoard(text){
-      const li = document.createElement('li');
-      li.textContent = text;
-      document.getElementById('wishBoard').appendChild(li);
-    }
 
-    // Heart reveal logic
+    // Heart reveal logic (Message appears inside the button)
     const heartMessages = [
-      'Your kindness inspires us',
-      'Always stay as graceful',
-      'You light up every room',
-      'Wishing you endless joy',
-      'May love follow you always',
-      'Keep shining, Madam'
+      'You are the reason for my smile.',
+      'Always stay as beautiful as you are.',
+      'Every moment with you is a gift.',
+      'Wishing you endless love and happiness.',
+      'Your heart is made of gold.',
+      'Forever grateful for you.'
     ];
 
     const heartGrid = document.getElementById('heartGrid');
+    heartGrid.innerHTML = ''; 
+
     for(let i=0;i<6;i++){
       const h = document.createElement('button');
       h.className = 'heart-btn';
+      h.innerHTML = `<span class="heart-icon">❓</span>`;
       h.dataset.msg = heartMessages[i];
-      h.addEventListener('click', ()=>{
-        h.classList.add('revealed');
-        h.textContent = '❤️';
-        showHeartMessage(h.dataset.msg);
+      h.addEventListener('click', function() {
+        if(this.classList.contains('revealed')) return;
+
+        this.classList.add('revealed');
+        // Inject message directly into the button
+        this.innerHTML = `<span class="heart-message-overlay">${this.dataset.msg}</span>`;
+        
         heartsRevealed++;
         checkHearts();
       });
@@ -135,7 +143,9 @@
     }
 
     function checkHearts(){
-      if(heartsRevealed >= 3) enableNext();
+      if(heartsRevealed >= 3 || balloonsPopped >= 3) {
+          enableNext();
+      }
     }
 
     function enableNext(){
@@ -148,20 +158,8 @@
       a.classList.add('opacity-50','pointer-events-none');
       a.href = '#';
     }
-
-    // Beautiful Heart Message Box
-    function showHeartMessage(message){
-      const box = document.getElementById('heartMessageBox');
-      const msg = document.getElementById('heartMessage');
-      msg.textContent = message;
-      box.classList.remove('hidden');
-      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
     
-    // Close heart message
-    document.getElementById('closeHeartMessage').addEventListener('click', ()=>{
-      document.getElementById('heartMessageBox').classList.add('hidden');
-    });
+    document.addEventListener('DOMContentLoaded', disableNext);
   </script>
 </body>
 </html>

@@ -8,35 +8,33 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+<body class="min-h-screen font-poppins">
 <header class="container mx-auto p-6 text-center">
-<h1 class="text-5xl md:text-6xl font-dancing script-heading">Happy Birthday, My Love 💕</h1>
-<p class="mt-4 text-lg text-gray-700">A romantic journey of wishes & memories just for you</p>
+<h1 class="text-5xl md:text-6xl font-dancing script-heading">Happy Birthday, My Star ✨</h1>
+<p class="mt-4 text-lg text-gray-300">A cosmic journey of wishes & memories just for you</p>
 <div class="mt-6 flex justify-center space-x-2">
-  <span class="text-2xl animate-bounce">💖</span>
-  <span class="text-2xl animate-bounce" style="animation-delay: 0.2s">✨</span>
-  <span class="text-2xl animate-bounce" style="animation-delay: 0.4s">💕</span>
+  <span class="text-3xl animate-bounce" style="color: var(--pop-color);">⭐</span>
+  <span class="text-3xl animate-bounce" style="animation-delay: 0.2s; color: var(--secondary-accent);">💫</span>
+  <span class="text-3xl animate-bounce" style="animation-delay: 0.4s; color: var(--primary-accent);">🌌</span>
 </div>
 </header>
 
 
 <main class="flex flex-col items-center justify-center mt-8">
 <button id="startBtn" class="btn-primary px-8 py-4 rounded-full shadow-lg text-lg font-semibold">
-  💕 Start Our Celebration 💕
+  ✨ Begin Our Galactic Journey ✨
 </button>
-<p class="mt-4 text-sm text-gray-600">Click to begin your special birthday journey</p>
+<p class="mt-4 text-sm text-gray-400">Click to begin your special birthday journey</p>
 </main>
 
 
-
-
-
+<audio id="bgAudio" src="assets/music/birthday.mp3"></audio>
 <script src="script.js"></script>
 <script>
 // Start button behavior specific for index.html
 document.getElementById('startBtn').addEventListener('click', function(){
-// confetti burst
-confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
+// confetti burst (using theme colors)
+confetti({ particleCount: 150, spread: 120, origin: { y: 0.6 }, colors: ['#F1C40F', '#8E44AD', '#2980B9', '#ECF0F1'] });
 // play music
 window.playBackgroundAudio();
 // navigate after short delay
