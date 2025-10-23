@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Wishes - Madam</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="assets/libs/typed.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+<nav class="p-4 container mx-auto flex justify-between items-center">
+<a href="index.html" class="text-sm">Home</a>
+<div class="nav-links space-x-4">
+<a href="memories.html">Memories</a>
+<a href="funzone.html">Fun Zone</a>
+<a href="surprise.html">Surprise</a>
+</div>
+</nav>
+
+
+<main class="container mx-auto p-6 text-center">
+  <h2 class="script-heading text-4xl">Dear Madam,</h2>
+  <div class="mt-6 max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 fade-in-up">
+    <div id="typed" class="text-xl leading-relaxed"></div>
+  </div>
+
+  <div class="mt-10">
+    <a href="funzone.html" class="btn-primary">Next: Play</a>
+  </div>
+</main>
+
+<footer class="fixed bottom-6 left-1/2 transform -translate-x-1/2">
+  <div id="player" class="player px-4 py-3 rounded-full shadow-md" style="width:auto;height:auto;border-radius:9999px;">
+    <button id="prevTrack" aria-label="Previous" class="btn-secondary" style="margin-right:8px;">⏮</button>
+    <button id="playToggle" aria-label="Play/Pause" class="btn-primary" style="margin-right:8px;">▶</button>
+    <button id="nextTrack" aria-label="Next" class="btn-secondary">⏭</button>
+    <span id="trackName" style="margin-left:12px;font-weight:600;color:#c2185b;">Loading...</span>
+  </div>
+</footer>
+
+<audio id="bgAudio" src="assets/music/birthday.mp3"></audio>
+
+<script src="script.js"></script>
+<script>
+// Typed.js initialization for wishes
+const typed = new Typed('#typed', {
+strings: [
+"Your guidance lights our path, and your smile brightens our days.",
+"May your birthday be as graceful and lovely as you are.",
+"Wishing you laughter, love, and a year of beautiful memories."
+],
+typeSpeed: 35,
+backSpeed: 10,
+backDelay: 1500,
+loop: false
+});
+
+// Playlist player logic
+let playlist = [];
+let currentIndex = 0;
+const audio = document.getElementById('bgAudio');
+const trackName = document.getElementById('trackName');
+const playBtn = document.getElementById('playToggle');
+const prevBtn = document.getElementById('prevTrack');
+const nextBtn = document.getElementById('nextTrack');
+
+function loadTrack(index){
+  const item = playlist[index];
+  if(!item) return;
+  audio.src = 'assets/music/' + item.file;
+  trackName.textContent = item.title;
+}
+
+function play(){ audio.play(); playBtn.textContent = '⏸'; }
+function pause(){ audio.pause(); playBtn.textContent = '▶'; }
+
+playBtn.addEventListener('click', ()=>{ audio.paused ? play() : pause(); });
+prevBtn.addEventListener('click', ()=>{
+  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+  loadTrack(currentIndex);
+  play();
+});
+nextBtn.addEventListener('click', ()=>{
+  currentIndex = (currentIndex + 1) % playlist.length;
+  loadTrack(currentIndex);
+  play();
+});
+
+audio.addEventListener('ended', ()=>{
+  currentIndex = (currentIndex + 1) % playlist.length;
+  loadTrack(currentIndex);
+  play();
+});
+
+// Load playlist from JSON
+async function loadPlaylist() {
+  try {
+    const response = await fetch('assets/music/playlist.json');
+    playlist = await response.json();
+    if (playlist.length > 0) {
+      loadTrack(currentIndex);
+    }
+  } catch (error) {
+    console.log('Using fallback playlist');
+    playlist = [{ title: 'Birthday Melody', file: 'birthday.mp3' }];
+    loadTrack(currentIndex);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  loadPlaylist();
+});
+</script>
+</body>
+</html>

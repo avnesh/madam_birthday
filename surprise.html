@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Surprise - Madam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+  <nav class="p-4 container mx-auto flex justify-between items-center">
+    <a href="index.html" class="text-sm">Home</a>
+    <div class="nav-links space-x-4">
+      <a href="memories.html">Memories</a>
+      <a href="wishes.html">Wishes</a>
+      <a href="funzone.html">Fun Zone</a>
+    </div>
+  </nav>
+
+  <main class="container mx-auto p-6 text-center">
+    <h2 class="text-4xl script-heading">A Little Surprise</h2>
+    <p class="mt-4">Click the glowing heart to reveal a special message.</p>
+
+    <div class="mt-8">
+      <button id="glowHeart" class="glow-heart">❤️</button>
+    </div>
+
+    <div id="secret" class="mt-6 hidden max-w-xl mx-auto text-lg">
+      <p>Madam — your presence makes everything beautiful. Wishing you a year of boundless joy, love, and peace. With heartfelt gratitude, Mr Stark.</p>
+      <div class="mt-6">
+        <a href="thankyou.html" class="btn-primary">Finish</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('glowHeart').addEventListener('click', ()=>{
+      document.getElementById('secret').classList.remove('hidden');
+      confetti({ particleCount: 100, spread: 80 });
+    });
+  </script>
+</body>
+</html>

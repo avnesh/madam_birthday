@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Test Page - Birthday Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+    <div class="container mx-auto p-6 text-center">
+        <h1 class="text-4xl script-heading">Test Page</h1>
+        <p class="mt-4">Testing all interactive features</p>
+        
+        <!-- Test Buttons -->
+        <div class="mt-8 space-y-4">
+            <button class="btn-primary" onclick="testConfetti()">Test Confetti</button>
+            <button class="btn-secondary" onclick="testTyped()">Test Typed.js</button>
+        </div>
+        
+        <!-- Test Balloons -->
+        <div class="mt-8">
+            <h3 class="text-2xl">Test Balloons</h3>
+            <div id="testBalloons" class="balloon-area"></div>
+            <button class="btn-primary mt-4" onclick="spawnTestBalloons()">Spawn Balloons</button>
+        </div>
+        
+        <!-- Test Hearts -->
+        <div class="mt-8">
+            <h3 class="text-2xl">Test Hearts</h3>
+            <div class="grid grid-cols-3 gap-4 mt-4" id="testHearts">
+                <!-- hearts populated by JS -->
+            </div>
+        </div>
+        
+        <!-- Test Typed -->
+        <div class="mt-8">
+            <h3 class="text-2xl">Test Typed.js</h3>
+            <div id="testTyped" class="mt-4 text-lg"></div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="mt-8">
+            <a href="index.html" class="btn-secondary">Go to Main Site</a>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        function testConfetti() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+        
+        function testTyped() {
+            if (typeof Typed !== 'undefined') {
+                new Typed('#testTyped', {
+                    strings: ['Testing typed.js...', 'It works!', 'Happy Birthday!'],
+                    typeSpeed: 50,
+                    backSpeed: 30,
+                    loop: true
+                });
+            } else {
+                document.getElementById('testTyped').textContent = 'Typed.js not loaded';
+            }
+        }
+        
+        function spawnTestBalloons() {
+            const area = document.getElementById('testBalloons');
+            area.innerHTML = '';
+            for(let i = 0; i < 3; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = (20 + i * 25) + '%';
+                balloon.addEventListener('click', () => {
+                    balloon.classList.add('pop');
+                    balloon.innerHTML = '<span class="wish">Test Message!</span>';
+                });
+                area.appendChild(balloon);
+            }
+        }
+        
+        // Initialize test hearts
+        document.addEventListener('DOMContentLoaded', () => {
+            const heartGrid = document.getElementById('testHearts');
+            const messages = ['Test 1', 'Test 2', 'Test 3'];
+            
+            for(let i = 0; i < 3; i++) {
+                const heart = document.createElement('button');
+                heart.className = 'heart-btn';
+                heart.textContent = '❤️';
+                heart.addEventListener('click', () => {
+                    alert(messages[i]);
+                    heart.classList.add('revealed');
+                });
+                heartGrid.appendChild(heart);
+            }
+        });
+    </script>
+</body>
+</html>

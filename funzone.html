@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fun Zone - Madam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+  <nav class="p-4 container mx-auto flex justify-between items-center">
+    <a href="index.html" class="text-sm">Home</a>
+    <div class="nav-links space-x-4">
+      <a href="memories.html">Memories</a>
+      <a href="wishes.html">Wishes</a>
+      <a href="surprise.html">Surprise</a>
+    </div>
+  </nav>
+
+  <main class="container mx-auto p-6 text-center">
+    <h2 class="text-3xl font-semibold script-heading">Fun Zone</h2>
+    <p class="mt-2">Pop the balloons to reveal wishes or click hearts for sweet messages.</p>
+
+    <section class="mt-6">
+      <div id="balloonArea" class="balloon-area"></div>
+      <div class="mt-6 space-x-3">
+        <button id="startBalloons" class="btn-primary">Spawn Balloons</button>
+        <button id="clearBalloons" class="btn-secondary">Clear</button>
+      </div>
+      <div class="mt-6 max-w-2xl mx-auto bg-white rounded-xl shadow p-4 text-left">
+        <h4 class="font-semibold mb-2">Wish Board</h4>
+        <ul id="wishBoard" class="list-disc list-inside text-sm text-gray-700"></ul>
+      </div>
+    </section>
+
+    <hr class="my-8"/>
+
+    <section>
+      <h3 class="text-2xl">Heart Reveal</h3>
+      <div class="grid grid-cols-3 gap-4 mt-4" id="heartGrid">
+        <!-- hearts populated by JS -->
+      </div>
+      
+      <!-- Beautiful Message Box for Heart Messages -->
+      <div id="heartMessageBox" class="mt-6 max-w-2xl mx-auto bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl shadow-lg p-6 border border-pink-200 hidden">
+        <div class="flex items-center justify-center mb-4">
+          <span class="text-4xl">💕</span>
+        </div>
+        <div id="heartMessage" class="text-center text-lg font-medium text-gray-800"></div>
+        <button id="closeHeartMessage" class="mt-4 mx-auto block btn-secondary text-sm">Close</button>
+      </div>
+    </section>
+
+    <div class="mt-8">
+      <a id="afterFunNext" href="#" class="btn-secondary opacity-50 pointer-events-none">Next: Surprise</a>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Balloon spawn & pop logic
+    document.getElementById('startBalloons').addEventListener('click', () => spawnBalloons(6));
+    document.getElementById('clearBalloons').addEventListener('click', () => {
+      document.getElementById('balloonArea').innerHTML = '';
+      document.getElementById('wishBoard').innerHTML = '';
+      balloonsPopped = 0;
+      heartsRevealed = 0;
+      disableNext();
+    });
+
+    let balloonsPopped = 0;
+    let heartsRevealed = 0;
+    const wishes = [
+      'You are cherished ❤️',
+      'May your smile bloom forever ✨',
+      'Your kindness lights the way 💖',
+      'Endless joy and peace to you 🌸',
+      'Stay graceful and strong 🌟',
+      'Keep shining bright 💫'
+    ];
+    function spawnBalloons(n){
+      const area = document.getElementById('balloonArea');
+      area.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        b.style.left = (8 + i*15) + '%';
+        b.style.animationDelay = (i * 0.2) + 's';
+        b.addEventListener('click', ()=>{
+          popBalloon(b, i);
+        });
+        area.appendChild(b);
+      }
+    }
+    function popBalloon(el, idx){
+      if(!el) return;
+      el.classList.add('pop');
+      const msg = wishes[idx % wishes.length];
+      el.innerHTML = '<span class="wish">' + msg + '</span>';
+      addWishToBoard(msg);
+      balloonsPopped++;
+      if(balloonsPopped >= 5){
+        enableNext();
+      }
+    }
+    function addWishToBoard(text){
+      const li = document.createElement('li');
+      li.textContent = text;
+      document.getElementById('wishBoard').appendChild(li);
+    }
+
+    // Heart reveal logic
+    const heartMessages = [
+      'Your kindness inspires us',
+      'Always stay as graceful',
+      'You light up every room',
+      'Wishing you endless joy',
+      'May love follow you always',
+      'Keep shining, Madam'
+    ];
+
+    const heartGrid = document.getElementById('heartGrid');
+    for(let i=0;i<6;i++){
+      const h = document.createElement('button');
+      h.className = 'heart-btn';
+      h.dataset.msg = heartMessages[i];
+      h.addEventListener('click', ()=>{
+        h.classList.add('revealed');
+        h.textContent = '❤️';
+        showHeartMessage(h.dataset.msg);
+        heartsRevealed++;
+        checkHearts();
+      });
+      heartGrid.appendChild(h);
+    }
+
+    function checkHearts(){
+      if(heartsRevealed >= 3) enableNext();
+    }
+
+    function enableNext(){
+      const a = document.getElementById('afterFunNext');
+      a.classList.remove('opacity-50','pointer-events-none');
+      a.href = 'surprise.html';
+    }
+    function disableNext(){
+      const a = document.getElementById('afterFunNext');
+      a.classList.add('opacity-50','pointer-events-none');
+      a.href = '#';
+    }
+
+    // Beautiful Heart Message Box
+    function showHeartMessage(message){
+      const box = document.getElementById('heartMessageBox');
+      const msg = document.getElementById('heartMessage');
+      msg.textContent = message;
+      box.classList.remove('hidden');
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Close heart message
+    document.getElementById('closeHeartMessage').addEventListener('click', ()=>{
+      document.getElementById('heartMessageBox').classList.add('hidden');
+    });
+  </script>
+</body>
+</html>

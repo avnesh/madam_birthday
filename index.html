@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday Madam</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+<header class="container mx-auto p-6 text-center">
+<h1 class="text-5xl md:text-6xl font-dancing script-heading">Happy Birthday, My Love 💕</h1>
+<p class="mt-4 text-lg text-gray-700">A romantic journey of wishes & memories just for you</p>
+<div class="mt-6 flex justify-center space-x-2">
+  <span class="text-2xl animate-bounce">💖</span>
+  <span class="text-2xl animate-bounce" style="animation-delay: 0.2s">✨</span>
+  <span class="text-2xl animate-bounce" style="animation-delay: 0.4s">💕</span>
+</div>
+</header>
+
+
+<main class="flex flex-col items-center justify-center mt-8">
+<button id="startBtn" class="btn-primary px-8 py-4 rounded-full shadow-lg text-lg font-semibold">
+  💕 Start Our Celebration 💕
+</button>
+<p class="mt-4 text-sm text-gray-600">Click to begin your special birthday journey</p>
+</main>
+
+
+
+
+
+<script src="script.js"></script>
+<script>
+// Start button behavior specific for index.html
+document.getElementById('startBtn').addEventListener('click', function(){
+// confetti burst
+confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
+// play music
+window.playBackgroundAudio();
+// navigate after short delay
+setTimeout(()=> location.href = 'memories.html', 1200);
+});
+</script>
+</body>
+</html>

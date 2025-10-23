@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank You - Madam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-pink-100 to-white min-h-screen font-poppins">
+  <main class="container mx-auto p-6 text-center">
+    <h2 class="text-4xl script-heading">Thank you,Madam</h2>
+    <p class="mt-4">Made with ❤️ by Mr Stark</p>
+    <div class="mt-8">
+      <a href="index.html" class="btn-secondary">Visit Again</a>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // fade out music
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const aud = document.getElementById('bgAudio');
+      if(aud){
+        // gracefully stop
+        aud.pause();
+        aud.currentTime = 0;
+      }
+    });
+  </script>
+</body>
+</html>
