@@ -686,15 +686,9 @@ nav a:hover {
   /* Wishes Page Player */
   .player {
     padding: 10px 15px;
-    gap: 10px;
-    border-radius: 40px;
-
-    /* --- FIX FOR BLOCKER BUG --- */
-    /* Make the player static on mobile so it doesn't cover the 'Next' button. */
-    position: static;
-    transform: translateX(0);
-    margin: 30px auto 0; /* Add margin for spacing */
-    width: fit-content; /* Adjust width to content */
+  }
+  .music-player-footer {
+    display: none; /* BUG FIX: Remove music player entirely on mobile view */
   }
   
   /* BUG FIX: Make background bubbles smaller on mobile */
