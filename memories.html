@@ -8,15 +8,37 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen font-poppins">
-<nav class="p-4 container mx-auto flex justify-between items-center">
-<a href="index.html" class="text-sm">Home</a>
-<div class="nav-links space-x-4">
-<a href="wishes.html">Wishes</a>
-<a href="funzone.html">Fun Zone</a>
-<a href="surprise.html">Surprise</a>
+<!-- Moving Background Particles -->
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
 </div>
-</nav>
+  <nav class="p-4 container mx-auto flex justify-between items-center relative">
+    <!-- Hamburger Button (Mobile Only) -->
+    <button id="hamburger-btn" class="md:hidden z-50">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
 
+    <!-- Navigation Links (Mobile Menu & Desktop) -->
+    <div class="hidden md:flex md:items-center md:space-x-4"><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a></div>
+    <a href="index.html" class="text-sm font-bold z-20">Home</a>
+  </nav>
+
+  <!-- Mobile Menu - MOVED HERE -->
+  <div id="nav-links" class="hidden mobile-nav"><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a></div>
 
 <main class="container mx-auto p-6">
 <h2 class="text-3xl font-semibold script-heading">Memory Lane</h2>
@@ -25,38 +47,62 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 fade-in-up">
   <div class="photo-card">
-    <img src="assets/images/photo1.jpg" alt="Memory 1: First day in class"/>
-    <div class="caption">First day in class — your gentle smile made the entire day shine.</div>
+    <img src="assets/images/photo1.jpeg" alt="Her smiling lovingly with her family inside a bright shopping mall"/>
+    <div class="caption">She carries love like it’s her second nature — gentle, grounding, and endlessly warm. Even among many, she shines as the heart of it all.</div>
   </div>
   <div class="photo-card">
-    <img src="assets/images/photo2.jpg" alt="Memory 2: Celebrating a win"/>
-    <div class="caption">That time we celebrated a small win together, a moment of true joy and laughter.</div>
+    <img src="assets/images/photo2.jpeg" alt="Her smiling outdoors in a festive look with a close friend"/>
+    <div class="caption">The way her laughter fills the air feels like sunrise after a long night. She has that rare magic — turning ordinary days into memories that never fade.</div>
   </div>
   <div class="photo-card">
-    <img src="assets/images/photo3.jpg" alt="Memory 3: Guidance"/>
-    <div class="caption">Your insightful guidance that completely changed my perspective and approach to life.</div>
+    <img src="assets/images/photo3.jpeg" alt="Her standing gracefully on a peaceful countryside road wearing a black ethnic outfit"/>
+    <div class="caption">Grace wrapped in simplicity — she doesn’t need grand lights to stand out. The world softens when she smiles.</div>
   </div>
   <div class="photo-card">
-    <img src="assets/images/photo1.jpg" alt="Memory 4: Comforting words"/>
-    <div class="caption">Your reassuring words that made a tough day suddenly feel brighter and manageable.</div>
+    <img src="assets/images/photo4.jpeg" alt="Her posing elegantly among friends in beautiful evening gowns"/>
+    <div class="caption">In a room full of elegance, my eyes still find her first. She doesn’t just look beautiful — she defines what beautiful feels like.</div>
   </div>
   <div class="photo-card">
-    <img src="assets/images/photo2.jpg" alt="Memory 5: Happy moment"/>
-    <div class="caption">A beautifully happy, quiet moment we shared that I will always keep close to my heart.</div>
+    <img src="assets/images/photo5.jpeg" alt="Her taking a mirror selfie wearing a royal blue saree with traditional jewelry"/>
+    <div class="caption">There’s poetry in her reflection. The kind that makes you forget the world and remember how it feels to fall for someone completely.</div>
   </div>
   <div class="photo-card">
-    <img src="assets/images/photo3.jpg" alt="Memory 6: Quiet support"/>
-    <div class="caption">The quiet, constant support you offered that meant more than any grand gesture ever could.</div>
+    <img src="assets/images/photo6.jpeg" alt="Her wearing a colorful turban and sunglasses with traditional orange attire"/>
+    <div class="caption">Royalty isn’t about crowns — it’s in how she carries her spirit. Bold, fearless, and beautifully unapologetic.</div>
   </div>
- </div>
+  <div class="photo-card">
+    <img src="assets/images/photo7.jpeg" alt="Her standing confidently in a black saree inside a softly lit room"/>
+    <div class="caption">Black suits her — not because it’s elegant, but because mystery and strength have always been a part of her soul.</div>
+  </div>
+  <div class="photo-card">
+    <img src="assets/images/photo8.jpeg" alt="Her smiling brightly among close friends during a celebration indoors"/>
+    <div class="caption">That smile — it disarms worries, commands attention, and reminds me that joy has a face… and it’s hers.</div>
+  </div>
+  <div class="photo-card">
+    <img src="assets/images/photo9.jpeg" alt="Her sitting in a car wearing yellow traditional attire with a bright happy smile"/>
+    <div class="caption">Every new journey looks brighter when she’s behind the wheel. Maybe she’s not driving a car — maybe she’s driving my whole world forward.</div>
+  </div>
+</div>
+
 
 
 <div class="mt-8 text-center">
-<a href="wishes.html" class="btn-secondary">Next: Wishes</a>
+<a href="wishes.html" class="btn-primary">Next Page: Wishes</a>
 </div>
 </main>
 
 <audio id="bgAudio" src="assets/music/birthday.mp3"></audio>
 <script src="script.js"></script>
+<script>
+  // BUG FIX: Make memory captions visible on tap for mobile
+  document.querySelectorAll('.photo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      // On mobile, a click should toggle the active state
+      if (window.innerWidth < 768) {
+        card.classList.toggle('active');
+      }
+    });
+  });
+</script>
 </body>
 </html>

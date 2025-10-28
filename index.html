@@ -9,13 +9,31 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen font-poppins">
+<!-- Moving Background Particles -->
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
 <header class="container mx-auto p-6 text-center">
 <h1 class="text-5xl md:text-6xl font-dancing script-heading">Happy Birthday, My Star ★</h1>
 <p class="mt-4 text-lg text-gray-600 header-subtext">A cosmic journey of wishes & memories just for you</p>
 <div class="mt-6 flex justify-center space-x-2">
-  <span class="text-3xl animate-bounce" style="color: var(--primary-pink);">💖</span>
-  <span class="text-3xl animate-bounce" style="animation-delay: 0.2s; color: var(--gold-accent);">✨</span>
-  <span class="text-3xl animate-bounce" style="animation-delay: 0.4s; color: var(--deep-red);">🌟</span>
+  <span class="text-3xl animate-bounce" style="color: var(--primary-indigo);">💖</span>
+  <span class="text-3xl animate-bounce" style="animation-delay: 0.2s; color: var(--text-secondary);">✨</span>
+  <span class="text-3xl animate-bounce" style="animation-delay: 0.4s; color: var(--primary-indigo);">🌟</span>
 </div>
 </header>
 
@@ -33,7 +51,7 @@
 // Start button behavior specific for index.html
 document.getElementById('startBtn').addEventListener('click', function(){
 // confetti burst (using theme colors)
-confetti({ particleCount: 150, spread: 120, origin: { y: 0.6 }, colors: ['#C2185B', '#FFC107', '#880E4F', '#F8BBD0'] });
+confetti({ particleCount: 150, spread: 120, origin: { y: 0.6 }, colors: ['#eecbff', '#a9f1df', '#f6d365', '#fda085', '#312e81'] });
 
 // Navigate directly after delay.
 setTimeout(()=> location.href = 'memories.html', 1200);

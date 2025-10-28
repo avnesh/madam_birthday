@@ -8,14 +8,37 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen font-poppins">
-<nav class="p-4 container mx-auto flex justify-between items-center">
-<a href="index.html" class="text-sm">Home</a>
-<div class="nav-links space-x-4">
-<a href="memories.html">Memories</a>
-<a href="funzone.html">Fun Zone</a>
-<a href="surprise.html">Surprise</a>
+<!-- Moving Background Particles -->
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
 </div>
-</nav>
+  <nav class="p-4 container mx-auto flex justify-between items-center relative">
+    <!-- Hamburger Button (Mobile Only) -->
+    <button id="hamburger-btn" class="md:hidden z-50">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
+
+    <!-- Navigation Links (Mobile Menu & Desktop) -->
+    <div class="hidden md:flex md:items-center md:space-x-4"><a href="memories.html">Memories</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a></div>
+    <a href="index.html" class="text-sm font-bold z-20">Home</a>
+  </nav>
+
+  <!-- Mobile Menu - MOVED HERE -->
+  <div id="nav-links" class="hidden mobile-nav"><a href="memories.html">Memories</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a></div>
 
 <main class="container mx-auto p-6 text-center">
   <h2 class="script-heading text-5xl mb-8">Dear Madam,</h2>
@@ -31,7 +54,7 @@
   </div>
 
   <div class="mt-16" style="position: relative; z-index: 100;">
-    <a href="funzone.html" onclick="stopMusicAndNavigate('funzone.html'); return false;" class="btn-primary">Next Page: Fun Zone</a>
+    <a id="nextPageBtn" href="funzone.html" class="btn-primary">Next Page: Fun Zone</a>
   </div>
 </main>
 
@@ -168,24 +191,11 @@ const musicPlayer = {
   },
   
   init() {
-    this.loadTrack(0, true); // Enable auto-play on page load
+    this.loadTrack(0, true); // FIX: Attempt to autoplay the first track on page load.
     this.bindEvents();
-    
-    // Stop music when user navigates away from the page
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        this.pause();
-      }
-    });
-    
-    // Stop music before page unload
-    window.addEventListener('beforeunload', () => {
-      this.pause();
-    });
   }
 };
 
-// Function to stop music and navigate (specific to wishes.html)
 function stopMusicAndNavigate(nextUrl) {
   if(typeof musicPlayer !== 'undefined' && musicPlayer.audio) {
     musicPlayer.audio.pause();
@@ -196,20 +206,12 @@ function stopMusicAndNavigate(nextUrl) {
 
 document.addEventListener('DOMContentLoaded', () => {
   musicPlayer.init();
-  
-  // Fallback: If autoplay is blocked, start music on first user interaction
-  let musicStarted = false;
-  const startMusicOnInteraction = () => {
-    if (!musicStarted && musicPlayer.audio.paused) {
-      musicPlayer.play();
-      musicStarted = true;
-    }
-  };
-  
-  // Listen for any user interaction to start music
-  document.addEventListener('click', startMusicOnInteraction, { once: true });
-  document.addEventListener('keydown', startMusicOnInteraction, { once: true });
-  document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+
+  // BUG FIX: Use addEventListener for robust navigation
+  document.getElementById('nextPageBtn').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the link from navigating immediately
+    stopMusicAndNavigate(this.href);
+  });
 });
 </script>
 </body>
