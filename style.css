@@ -442,23 +442,52 @@ nav a:hover {
 /* Navigation for Mobile */
 @media (max-width: 768px) {
   nav {
-    padding: 10px;
+    padding: 10px 15px;
+    flex-wrap: wrap;
   }
   
   nav .nav-links {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+    width: 100%;
   }
   
   nav .nav-links a {
-    padding: 4px 8px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 15px;
+  }
+  
+  /* Header improvements for mobile */
+  header {
+    padding: 20px 15px !important;
   }
   
   .script-heading {
-    font-size: 2.5rem !important;
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  
+  /* Header subtext improvements */
+  .header-subtext {
+    font-size: 0.9rem !important;
+    line-height: 1.4;
+    margin: 8px 0;
+  }
+  
+  /* Emoji container for mobile */
+  .mt-6.flex.justify-center.space-x-2 {
+    margin-top: 15px !important;
+    gap: 8px;
+  }
+  
+  .mt-6.flex.justify-center.space-x-2 span {
+    font-size: 2rem !important;
   }
   
   .btn-primary {
@@ -527,5 +556,36 @@ nav a:hover {
   .playlist-item {
     padding: 12px 15px;
     font-size: 0.9rem;
+  }
+}
+
+/* Extra small mobile screens (phones in portrait) */
+@media (max-width: 480px) {
+  .script-heading {
+    font-size: 1.8rem !important;
+    line-height: 1.1;
+  }
+  
+  .header-subtext {
+    font-size: 0.8rem !important;
+    padding: 0 10px;
+  }
+  
+  .mt-6.flex.justify-center.space-x-2 span {
+    font-size: 1.5rem !important;
+  }
+  
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  nav .nav-links a {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  
+  header {
+    padding: 15px 10px !important;
   }
 }

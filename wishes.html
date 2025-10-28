@@ -30,9 +30,9 @@
       </div>
   </div>
 
-  <div class="mt-16" style="position: relative; z-index: 100;">
-    <a href="funzone.html" onclick="window.stopAudioAndNavigate('funzone.html'); return false;" class="btn-primary">Next Page: Fun Zone</a>
-  </div>
+  <div class="mt-16" style="position: relative; z-index: 100;">
+    <a href="funzone.html" onclick="stopMusicAndNavigate('funzone.html'); return false;" class="btn-primary">Next Page: Fun Zone</a>
+  </div>
 </main>
 
 <footer class="fixed bottom-6 left-1/2 transform -translate-x-1/2" style="z-index: 1000;">
@@ -80,23 +80,26 @@ const musicPlayer = {
   nextBtn: document.getElementById('nextTrack'),
   playlistList: document.getElementById('playlistList'),
 
-  loadTrack(index, autoPlay = true) {
-    if(index < 0 || index >= this.playlist.length) return;
-    this.currentIndex = index;
-    const item = this.playlist[this.currentIndex];
-    
-    this.audio.src = 'assets/music/' + item.file;
-    
-    if(autoPlay) {
-      this.audio.play().catch(() => {
-        console.log('Autoplay prevented');
-        this.playBtn.innerHTML = '▶';
-      });
-    }
-    
-    this.trackName.textContent = item.title;
-    this.updatePlaylistUI();
-  },
+  loadTrack(index, autoPlay = true) {
+    if(index < 0 || index >= this.playlist.length) return;
+    this.currentIndex = index;
+    const item = this.playlist[this.currentIndex];
+    
+    this.audio.src = 'assets/music/' + item.file;
+    
+    if(autoPlay) {
+      // Add a small delay to ensure audio is loaded
+      setTimeout(() => {
+        this.audio.play().catch(() => {
+          console.log('Autoplay prevented - user interaction required');
+          this.playBtn.innerHTML = '▶';
+        });
+      }, 100);
+    }
+    
+    this.trackName.textContent = item.title;
+    this.updatePlaylistUI();
+  },
 
   play() { 
     this.audio.play().catch(() => console.log('Play prevented'));
@@ -164,14 +167,49 @@ const musicPlayer = {
     });
   },
   
-  init() {
-    this.loadTrack(0, false);
-    this.bindEvents();
-  }
+  init() {
+    this.loadTrack(0, true); // Enable auto-play on page load
+    this.bindEvents();
+    
+    // Stop music when user navigates away from the page
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this.pause();
+      }
+    });
+    
+    // Stop music before page unload
+    window.addEventListener('beforeunload', () => {
+      this.pause();
+    });
+  }
 };
 
+// Function to stop music and navigate (specific to wishes.html)
+function stopMusicAndNavigate(nextUrl) {
+  if(typeof musicPlayer !== 'undefined' && musicPlayer.audio) {
+    musicPlayer.audio.pause();
+    musicPlayer.audio.currentTime = 0;
+  }
+  location.href = nextUrl;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  musicPlayer.init();
+  musicPlayer.init();
+  
+  // Fallback: If autoplay is blocked, start music on first user interaction
+  let musicStarted = false;
+  const startMusicOnInteraction = () => {
+    if (!musicStarted && musicPlayer.audio.paused) {
+      musicPlayer.play();
+      musicStarted = true;
+    }
+  };
+  
+  // Listen for any user interaction to start music
+  document.addEventListener('click', startMusicOnInteraction, { once: true });
+  document.addEventListener('keydown', startMusicOnInteraction, { once: true });
+  document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
 });
 </script>
 </body>
