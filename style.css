@@ -1,14 +1,15 @@
-/* "LIQUID AURORA" THEME - Award-Winning & Unique */
+/* NEW "THE ARCHITECT" THEME - Award-Winning & Unique */
 @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
 
 :root {
-  /* "Liquid Aurora" Palette */
-  --primary-indigo: #312e81;    /* Deep, elegant indigo for headings & accents */
-  --text-primary: #1e1b4b;      /* Dark indigo for body text for high contrast */
-  --text-secondary: #4338ca;    /* Brighter indigo for subtext */
-  --glass-bg: rgba(255, 255, 255, 0.45); /* Frosted glass background */
-  --glass-border: rgba(255, 255, 255, 0.3); /* Subtle border for glass elements */
-  --glass-hover-bg: rgba(255, 255, 255, 0.7);
+  /* New "The Architect" Palette */
+  --primary-bg: #0a0a0a;         /* Deep, rich black */
+  --text-primary: #cccccc;       /* Soft grey-white for body text */
+  --text-secondary: #777777;     /* Muted grey for subtext */
+  --accent-starlight: #ffffff;   /* Brilliant white for headings & accents */
+  --glass-bg: rgba(10, 10, 10, 0.5); /* Dark, translucent glass */
+  --glass-border: rgba(255, 255, 255, 0.1); /* Faint starlight border */
+  --glass-hover-bg: rgba(255, 255, 255, 0.03);
   --text-light: #FFFFFF;         /* Pure White */
 }
 
@@ -20,10 +21,7 @@
 
 body { 
   font-family: 'Poppins', sans-serif; 
-  /* WOW FACTOR: Animated Gradient Mesh Background */
-  background: linear-gradient(315deg, #eecbff, #a9f1df, #f6d365, #fda085);
-  background-size: 400% 400%;
-  animation: gradient-animation 25s ease infinite;
+  background-color: transparent; /* FIX: Make body transparent to reveal canvas */
   min-height: 100vh;
   line-height: 1.6;
   color: var(--text-primary);
@@ -31,10 +29,16 @@ body {
   padding-bottom: 150px; 
 }
 
-@keyframes gradient-animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+/* --- "PARTICLE NETWORK" AWARD-WINNING BACKGROUND --- */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2; /* Behind all content */
+  background-color: var(--primary-bg); /* FIX: Apply dark background here */
+  /* The magic happens in script.js */
 }
 
 /* FIX: New style for the header subtext to improve readability */
@@ -45,10 +49,10 @@ body {
 
 /* Navigation Bar */
 nav {
-  /* Glassmorphism Nav */
+  /* Dark, Minimalist Glassmorphism Nav */
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid var(--glass-border);
   /* FIX: Ensure nav bar has a stacking context to not interfere with menu */
   position: relative;
@@ -56,7 +60,7 @@ nav {
 }
 
 nav a {
-  color: var(--primary-indigo);
+  color: var(--text-primary);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -65,18 +69,18 @@ nav a {
 }
 
 nav a:hover {
-  background: var(--glass-hover-bg);
-  color: white;
+  background: var(--glass-border);
+  color: var(--accent-starlight);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(31, 38, 135, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Typography */
 .script-heading { 
   font-family: 'Dancing Script', cursive; 
-  color: var(--primary-indigo);
-  font-weight: 700;
-  text-shadow: 0 2px 15px rgba(255, 255, 255, 0.5);
+  color: var(--accent-starlight);
+  font-weight: 500;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
   letter-spacing: 1px;
 }
 
@@ -84,29 +88,17 @@ nav a:hover {
   font-family: 'Dancing Script', cursive;
 }
 
-/* WOW FACTOR: Animated Gradient Text for index.html */
-.animated-text-gradient {
-  background: linear-gradient(315deg, #eecbff, #a9f1df, #f6d365, #fda085);
-  background-size: 200% 200%;
-  animation: gradient-animation 15s ease infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent; /* Fallback */
-}
-
 /* Button Styles */
 .btn-primary { 
-  background: linear-gradient(135deg, var(--primary-indigo) 0%, #4338ca 100%);
-  color: var(--text-light);
+  background: transparent;
+  color: var(--accent-starlight);
   padding: 14px 32px;
   border-radius: 50px;
-  border: none;
+  border: 2px solid var(--accent-starlight);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  /* WOW FACTOR: Add a pulsating glow animation */
-  box-shadow: 0 0 15px rgba(49, 46, 129, 0.4);
-  animation: pulse-glow 2.5s infinite ease-in-out;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   text-decoration: none;
   display: inline-block;
   position: relative;
@@ -115,15 +107,16 @@ nav a:hover {
 }
 
 .btn-primary:hover {
+  background: var(--accent-starlight);
+  color: var(--primary-bg);
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 12px 35px rgba(49, 46, 129, 0.5);
-  animation-play-state: paused; /* Pause the glow on hover to feel more responsive */
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.4);
 }
 
 .btn-secondary { 
   background: transparent; 
-  border: 2px solid var(--primary-indigo); 
-  color: var(--primary-indigo);
+  border: 2px solid var(--text-secondary); 
+  color: var(--text-secondary);
   padding: 10px 24px; 
   border-radius: 50px;
   font-weight: 700;
@@ -135,80 +128,15 @@ nav a:hover {
 }
 
 .btn-secondary:hover {
-  background: var(--primary-indigo);
-  color: var(--text-light);
+  background: var(--text-secondary);
+  color: var(--primary-bg);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 20px rgba(49, 46, 129, 0.2);
+  box-shadow: 0 8px 20px rgba(136, 146, 176, 0.1);
 }
-
-/* Keyframes for the new button pulse animation */
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 0 15px rgba(49, 46, 129, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(49, 46, 129, 0.7);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(49, 46, 129, 0.4);
-  }
-}
-
-/* --- WOW FACTOR: Add moving particles/orbs to the background --- */
-@keyframes float-down {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    10%, 90% {
-        opacity: 0.9; /* More solid */
-    }
-    100% {
-        transform: translateY(120vh); /* FIX: Move downwards */
-        opacity: 0;
-    }
-}
-
-.particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Behind all content */
-    overflow: hidden;
-}
-
-.particle {
-    position: absolute;
-    top: -200px; /* FIX: Start above the screen */
-    background: rgba(255, 255, 255, 0.6); /* FIX: Make bubbles more solid */
-    border-radius: 50%;
-    animation: float-down linear infinite; /* FIX: Use new downward animation */
-    opacity: 0;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Add a soft glow to enhance solidity */
-}
-
-/* Generate multiple particles with different sizes, positions, and faster animation delays */
-.particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 15s; }
-.particle:nth-child(2) { width: 120px; height: 120px; left: 20%; animation-duration: 10s; }
-.particle:nth-child(3) { width: 60px; height: 60px; left: 35%; animation-duration: 18s; }
-.particle:nth-child(4) { width: 150px; height: 150px; left: 50%; animation-duration: 9s; }
-.particle:nth-child(5) { width: 70px; height: 70px; left: 65%; animation-duration: 16s; }
-.particle:nth-child(6) { width: 100px; height: 100px; left: 80%; animation-duration: 12s; }
-.particle:nth-child(7) { width: 90px; height: 90px; left: 90%; animation-duration: 14s; }
-.particle:nth-child(8) { width: 50px; height: 50px; left: 5%; animation-duration: 20s; }
-.particle:nth-child(9) { width: 130px; height: 130px; left: 40%; animation-duration: 11s; }
-.particle:nth-child(10) { width: 75px; height: 75px; left: 70%; animation-duration: 17s; }
-.particle:nth-child(11) { width: 95px; height: 95px; left: 25%; animation-duration: 13s; }
-.particle:nth-child(12) { width: 45px; height: 45px; left: 55%; animation-duration: 22s; }
-.particle:nth-child(13) { width: 110px; height: 110px; left: 85%; animation-duration: 10s; }
-.particle:nth-child(14) { width: 65px; height: 65px; left: 15%; animation-duration: 19s; }
-.particle:nth-child(15) { width: 85px; height: 85px; left: 75%; animation-duration: 16s; }
 
 /* Photo Cards (Memories) */
 .photo-card { 
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   position: relative; 
@@ -216,38 +144,24 @@ nav a:hover {
   border-radius: 12px; /* Slightly smaller radius for elegance */
   transition: all 0.4s ease;
   cursor: pointer;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .photo-card:hover {
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
   border-color: var(--glass-border);
   transform: translateY(-8px);
-}
-
-/* BUG FIX: Add visual cue for tapping on mobile */
-@media (max-width: 768px) {
-  .photo-card::after {
-    content: '+';
-    position: absolute;
-    top: 5px;
-    right: 12px;
-    font-size: 2rem;
-    color: white;
-    opacity: 0.7;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    transition: opacity 0.3s ease;
-    z-index: 1;
-  }
 }
 
 .photo-card img { 
   width: 100%; 
   height: 280px; 
+  /* DESKTOP FIX: Use 'cover' for a gapless grid and 'top' to prevent bad crops. */
+  /* FIX: Use 'contain' to show the full image without cropping. */
   object-fit: contain;
   display: block;
   transition: transform 0.4s ease;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+  background: rgba(0,0,0,0.2);
 }
 
 .photo-card:hover img {
@@ -259,9 +173,9 @@ nav a:hover {
   bottom: 0; 
   left: 0; 
   right: 0; 
-  background: linear-gradient(transparent, rgba(49, 46, 129, 0.8));
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
   color: #fff; 
-  padding: 20px 15px 15px; 
+  padding: 40px 15px 15px; /* Increase padding to make space for peeking text */
   transform: translateY(calc(100% - 15px));
   transition: transform 0.4s ease;
   font-size: 14px;
@@ -270,14 +184,8 @@ nav a:hover {
   font-weight: 400;
 }
 
-/* BUG FIX: Show caption on hover (desktop) or when active (mobile tap) */
-.photo-card:hover .caption,
-.photo-card.active .caption { 
+.photo-card:hover .caption { 
   transform: translateY(0); 
-}
-
-.photo-card.active::after {
-  opacity: 0;
 }
 
 /* Balloon Area (Fun Zone) */
@@ -287,7 +195,7 @@ nav a:hover {
   background: var(--glass-bg);
   border-radius: 15px;
   margin: 30px 0;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden; 
   border: 1px solid var(--glass-border);
 }
@@ -338,12 +246,12 @@ nav a:hover {
 }
 
 /* Balloon Colors */
-.balloon-color-1 { background: radial-gradient(circle at 30% 30%, #fecdd3, #fb7185); }
-.balloon-color-2 { background: radial-gradient(circle at 30% 30%, #fde68a, #facc15); }
-.balloon-color-3 { background: radial-gradient(circle at 30% 30%, #d8b4fe, #c084fc); }
-.balloon-color-4 { background: radial-gradient(circle at 30% 30%, #a5b4fc, #818cf8); }
-.balloon-color-5 { background: radial-gradient(circle at 30% 30%, #a7f3d0, #6ee7b7); }
-.balloon-color-6 { background: radial-gradient(circle at 30% 30%, #f9a8d4, #f472b6); }
+.balloon-color-1 { background: radial-gradient(circle at 30% 30%, #FFB6C1, #FF69B4); }
+.balloon-color-2 { background: radial-gradient(circle at 30% 30%, #FFE4B5, #FFD700); }
+.balloon-color-3 { background: radial-gradient(circle at 30% 30%, #DDA0DD, #DA70D6); }
+.balloon-color-4 { background: radial-gradient(circle at 30% 30%, #87CEEB, #4682B4); }
+.balloon-color-5 { background: radial-gradient(circle at 30% 30%, #a7f3d0, #34d399); } /* Mint Green */
+.balloon-color-6 { background: radial-gradient(circle at 30% 30%, #fdbb74, #f97316); } /* Soft Orange */
 
 /* REFINED WOBBLE ANIMATION (more performant) */
 @keyframes floatWobbleUp {
@@ -378,15 +286,14 @@ nav a:hover {
 .wish-pop {
   font-weight: 700;
   font-size: 1.5rem;
-  color: var(--primary-indigo);
+  color: var(--text-primary);
   text-shadow: 
-    1px 1px 0 rgba(255, 255, 255, 0.9),
-    2px 2px 10px rgba(49, 46, 129, 0.2);
+    0 0 10px rgba(255, 255, 255, 0.5);
   animation: wishAppear 0.5s ease-out;
-  background: var(--glass-hover-bg);
+  background: rgba(255, 255, 255, 0.05);
   padding: 15px 25px;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(49, 46, 129, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid var(--glass-border);
 }
 
@@ -404,25 +311,25 @@ nav a:hover {
   padding: 20px; 
   cursor: pointer; 
   transition: all 0.3s ease;
-  color: var(--primary-indigo);
+  color: var(--text-primary);
   min-height: 120px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .heart-btn:hover {
-  background: var(--glass-hover-bg);
+  background: var(--glass-border);
   border-color: var(--glass-border);
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 10px 30px rgba(49, 46, 129, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .heart-btn.revealed { 
-  background: linear-gradient(135deg, var(--primary-indigo), #4338ca);
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
   border-color: transparent;
-  color: var(--text-light);
+  color: white;
   cursor: default;
 }
 
@@ -436,9 +343,9 @@ nav a:hover {
 
 /* Glow Heart (Surprise) */
 .glow-heart { 
-  background: radial-gradient(circle, #a5b4fc 0%, var(--primary-indigo) 100%);
-  color: white;
-  box-shadow: 0 0 25px rgba(79, 70, 229, 0.8), 0 0 50px rgba(79, 70, 229, 0.5);
+  background: radial-gradient(circle, #ffffff 0%, #e0e0e0 100%);
+  color: var(--primary-bg);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   font-size: 4rem; 
   padding: 40px; 
@@ -452,15 +359,15 @@ nav a:hover {
 @keyframes pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 25px rgba(79, 70, 229, 0.8), 0 0 50px rgba(79, 70, 229, 0.5);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px rgba(255, 255, 255, 0.5);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 0 40px rgba(79, 70, 229, 1), 0 0 70px rgba(79, 70, 229, 0.7);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 1), 0 0 70px rgba(255, 255, 255, 0.7);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 25px rgba(79, 70, 229, 0.8), 0 0 50px rgba(79, 70, 229, 0.5);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px rgba(255, 255, 255, 0.5);
   }
 }
 
@@ -477,7 +384,7 @@ nav a:hover {
 /* Typed Message Container */
 .typed-message-container {
   background: var(--glass-bg);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
   padding: 30px;
@@ -489,7 +396,7 @@ nav a:hover {
 /* Playlist Styling */
 .playlist-container {
   background: var(--glass-bg);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   border: 1px solid var(--glass-border);
   text-align: left;
 }
@@ -505,12 +412,12 @@ nav a:hover {
 }
 
 .playlist-scroll::-webkit-scrollbar-track {
-  background: rgba(49, 46, 129, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
 }
 
 .playlist-scroll::-webkit-scrollbar-thumb {
-  background: rgba(49, 46, 129, 0.4);
+  background: var(--text-secondary);
   border-radius: 3px;
 }
 
@@ -524,39 +431,39 @@ nav a:hover {
   font-weight: 500;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
 }
 
 .playlist-item:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--glass-border);
   transform: translateX(3px);
 }
 
 .playlist-item.active {
-  background: linear-gradient(135deg, var(--primary-indigo), #4338ca);
+  background: var(--glass-border);
   color: white;
   font-weight: 600;
   border-left: 4px solid var(--accent-silver);
-  box-shadow: 0 3px 10px rgba(49, 46, 129, 0.3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 .play-icon {
   font-size: 1.2rem;
   margin-right: 10px;
-  color: var(--primary-indigo);
+  color: var(--text-secondary);
   transition: color 0.2s ease;
 }
 
 .playlist-item.active .play-icon {
-  color: var(--text-light);
+  color: var(--accent-starlight);
 }
 
 /* Music Player */
-.player { /* BUG FIX: Complete restyle of music player */
-  background: var(--glass-hover-bg);
+.player { 
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-  border-radius: 50px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 60px;
   padding: 15px 30px;
   display: flex;
   align-items: center;
@@ -564,32 +471,17 @@ nav a:hover {
   /* Ensure the track name doesn't push elements out */
   max-width: 90vw;
 }
-.player button {
-  background: transparent;
-  border: 1px solid var(--primary-indigo);
-  color: var(--primary-indigo);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  transition: all 0.2s ease;
-}
-.player button:hover {
-  /* BUG FIX: Invert colors on hover for better visibility */
-  background: var(--primary-indigo);
-  color: var(--text-light);
-  transform: scale(1.05);
-}
 
 #trackName {
-  color: var(--primary-indigo);
+  color: var(--text-primary);
   font-weight: 600;
-  /* BUG FIX: Remove width restrictions to show full track name */
-  margin: 0 12px;
-  flex-shrink: 0; /* Prevent the name from being squished */
+  margin-left: 12px;
+  /* Use max-width to allow wrapping on smaller screens */
+  max-width: 150px; 
+  min-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* --- Mobile Responsiveness --- */
@@ -686,28 +578,17 @@ nav a:hover {
   /* Wishes Page Player */
   .player {
     padding: 10px 15px;
-  }
-  .music-player-footer {
-    display: none; /* BUG FIX: Remove music player entirely on mobile view */
+    gap: 10px;
+    border-radius: 40px;
+
+    /* --- FIX FOR BLOCKER BUG --- */
+    /* Make the player static on mobile so it doesn't cover the 'Next' button. */
+    position: static;
+    transform: translateX(0);
+    margin: 30px auto 0; /* Add margin for spacing */
+    width: fit-content; /* Adjust width to content */
   }
   
-  /* BUG FIX: Make background bubbles smaller on mobile */
-  .particle:nth-child(1) { width: 40px; height: 40px; }
-  .particle:nth-child(2) { width: 60px; height: 60px; }
-  .particle:nth-child(3) { width: 30px; height: 30px; }
-  .particle:nth-child(4) { width: 75px; height: 75px; }
-  .particle:nth-child(5) { width: 35px; height: 35px; }
-  .particle:nth-child(6) { width: 50px; height: 50px; }
-  .particle:nth-child(7) { width: 45px; height: 45px; }
-  .particle:nth-child(8) { width: 25px; height: 25px; }
-  .particle:nth-child(9) { width: 65px; height: 65px; }
-  .particle:nth-child(10) { width: 38px; height: 38px; }
-  .particle:nth-child(11) { width: 48px; height: 48px; }
-  .particle:nth-child(12) { width: 23px; height: 23px; }
-  .particle:nth-child(13) { width: 55px; height: 55px; }
-  .particle:nth-child(14) { width: 33px; height: 33px; }
-  .particle:nth-child(15) { width: 43px; height: 43px; }
-
   /* --- Hamburger Menu Styles (FIXED) --- */
   .mobile-nav {
     position: fixed;
@@ -717,7 +598,7 @@ nav a:hover {
     max-width: 300px;
     height: 100%;
     /* UI FIX: Added gradient to match theme */
-    background: var(--glass-bg);
+    background: var(--primary-bg);
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* UI FIX: Align items to the top */
@@ -759,6 +640,17 @@ nav a:hover {
   /* CLICK FIX: Lower the hamburger's z-index when the menu is open */
   #hamburger-btn.active {
     z-index: 35; /* Lower than the menu (40), but higher than the overlay (20) */
+  }
+
+  /* BUG FIX: Logic for showing/hiding hamburger and close icons */
+  #hamburger-btn .close-icon {
+    display: none;
+  }
+  #hamburger-btn.active .hamburger-icon {
+    display: none;
+  }
+  #hamburger-btn.active .close-icon {
+    display: block;
   }
 
   #trackName {

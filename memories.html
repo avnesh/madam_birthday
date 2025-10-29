@@ -95,11 +95,21 @@
 <script src="script.js"></script>
 <script>
   // BUG FIX: Make memory captions visible on tap for mobile
-  document.querySelectorAll('.photo-card').forEach(card => {
+  const photoCards = document.querySelectorAll('.photo-card');
+  photoCards.forEach(card => {
     card.addEventListener('click', () => {
-      // On mobile, a click should toggle the active state
+      // This logic should only apply on mobile devices
       if (window.innerWidth < 768) {
-        card.classList.toggle('active');
+        const wasActive = card.classList.contains('active');
+
+        // First, remove 'active' from all cards
+        photoCards.forEach(c => c.classList.remove('active'));
+
+        // If the clicked card was NOT active, make it active.
+        // This creates a "toggle on, click another to close" behavior.
+        if (!wasActive) {
+          card.classList.add('active');
+        }
       }
     });
   });
