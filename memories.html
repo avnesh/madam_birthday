@@ -95,49 +95,11 @@
 <script src="script.js"></script>
 <script>
   // BUG FIX: Make memory captions visible on tap for mobile
-  const photoCards = document.querySelectorAll('.photo-card');
-
-  // Function to handle activating a card and deactivating others
-  function activateCard(cardToActivate) {
-    const wasActive = cardToActivate.classList.contains('active');
-
-    // First, remove 'active' from all cards
-    photoCards.forEach(c => c.classList.remove('active'));
-
-    // If the tapped/swiped card was NOT active, make it active.
-    if (!wasActive) {
-      cardToActivate.classList.add('active');
-    }
-  }
-
-  photoCards.forEach(card => {
-    let touchstartX = 0;
-    let touchstartY = 0;
-
-    // Listen for the start of a touch
-    card.addEventListener('touchstart', (event) => {
-      touchstartX = event.changedTouches[0].screenX;
-      touchstartY = event.changedTouches[0].screenY;
-    }, { passive: true });
-
-    // Listen for the end of a touch
-    card.addEventListener('touchend', (event) => {
-      // This logic should only apply on mobile devices
-      if (window.innerWidth >= 768) return;
-
-      const touchendX = event.changedTouches[0].screenX;
-      const touchendY = event.changedTouches[0].screenY;
-
-      const deltaX = Math.abs(touchstartX - touchendX);
-      const deltaY = touchstartY - touchendY; // Positive value means swipe up
-
-      // Check for a vertical swipe up (significant Y movement, little X movement)
-      if (deltaY > 50 && deltaX < 50) {
-        activateCard(card);
-      } 
-      // Check for a simple tap (very little movement in any direction)
-      else if (deltaY < 10 && deltaX < 10) {
-        activateCard(card);
+  document.querySelectorAll('.photo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      // On mobile, a click should toggle the active state
+      if (window.innerWidth < 768) {
+        card.classList.toggle('active');
       }
     });
   });
