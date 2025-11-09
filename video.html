@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Video Message - Madam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen font-poppins">
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  
+  <nav class="p-4 container mx-auto flex justify-between items-center relative">
+    <button id="hamburger-btn" class="md:hidden z-50">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
+
+    <div class="hidden md:flex md:items-center md:space-x-4"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a><a href="video.html">Video</a></div>
+    <a href="index.html" class="text-sm font-bold z-20">Home</a>
+  </nav>
+
+  <div id="nav-links" class="hidden mobile-nav"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a><a href="video.html">Video</a></div>
+  <main class="container mx-auto p-6 text-center">
+    <h2 class="text-4xl script-heading">Your Special Video Message</h2>
+    <p class="mt-4 text-gray-600">Watch the final surprise just for you.</p>
+
+    <div class="mt-8 w-full md:max-w-4xl mx-auto rounded-xl shadow-2xl overflow-hidden typed-message-container" style="background: rgba(0,0,0,0.8); border: none; padding: 0;">
+      <video id="surpriseVideo" controls preload="auto" playsinline style="width: 100%; height: auto; display: block;">
+        <source src="assets/video/Afusic - Pal Pal (Official Music Video) Prod. @AliSoomroMusic.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    
+    <div id="finishButtonContainer" class="mt-8 hidden">
+      <p class="text-2xl script-heading mb-4">You reached the end! 💖</p>
+      <a href="thankyou.html" class="btn-primary">Finish</a>
+    </div>
+
+  </main>
+
+  <audio id="bgAudio" src="assets/music/birthday.mp3"></audio>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const video = document.getElementById('surpriseVideo');
+      const finishBtn = document.getElementById('finishButtonContainer');
+      
+      // Event listener for when the video playback ends
+      if (video) {
+        video.addEventListener('ended', function() {
+          finishBtn.classList.remove('hidden');
+        });
+        
+        // Optional: Ensure music stops on this page
+        const aud = document.getElementById('bgAudio');
+        if(aud){
+          // gracefully stop
+          aud.pause();
+          aud.currentTime = 0;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

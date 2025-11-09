@@ -64,11 +64,14 @@ nav a {
   border-radius: 20px;
 }
 
+/* Update the nav a:hover rule in style.css */
 nav a:hover {
-  background: var(--glass-hover-bg);
-  color: white;
+  /* CRITICAL FIX: Change text color to deep indigo for visibility */
+  color: var(--primary-indigo); 
+  /* Make background slightly more solid for better visual cue */
+  background: rgba(255, 255, 255, 0.9); 
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(31, 38, 135, 0.1);
+  box-shadow: 0 5px 15px rgba(31, 38, 135, 0.2); /* Slightly stronger shadow */
 }
 
 /* Typography */
@@ -805,5 +808,14 @@ nav a:hover {
   
   header {
     padding: 15px 10px !important;
+  }
+}
+
+/* Add this to the end of your style.css file */
+@media (max-width: 768px) {
+  /* Targeting the video container specifically */
+  .container .mt-8 {
+    margin-top: 2rem !important; /* Ensure a minimum margin from the text above */
+    padding: 0 1rem; /* Add horizontal padding to prevent the video touching screen edges */
   }
 }

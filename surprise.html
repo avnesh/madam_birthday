@@ -9,7 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body class="min-h-screen font-poppins">
-<!-- Moving Background Particles -->
 <div class="particles">
   <div class="particle"></div>
   <div class="particle"></div>
@@ -28,18 +27,15 @@
   <div class="particle"></div>
 </div>
   <nav class="p-4 container mx-auto flex justify-between items-center relative">
-    <!-- Hamburger Button (Mobile Only) -->
     <button id="hamburger-btn" class="md:hidden z-50">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
     </button>
 
-    <!-- Navigation Links (Mobile Menu & Desktop) -->
-    <div class="hidden md:flex md:items-center md:space-x-4"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a></div>
+    <div class="hidden md:flex md:items-center md:space-x-4"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="video.html">Video</a></div>
     <a href="index.html" class="text-sm font-bold z-20">Home</a>
   </nav>
 
-  <!-- Mobile Menu - MOVED HERE -->
-  <div id="nav-links" class="hidden mobile-nav"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a></div>
+  <div id="nav-links" class="hidden mobile-nav"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="video.html">Video</a></div>
 
   <main class="container mx-auto p-6 text-center">
     <h2 class="text-4xl script-heading">A Special Surprise</h2>
@@ -52,7 +48,7 @@
     <div id="secret" class="mt-6 hidden max-w-xl mx-auto text-lg typed-message-container">
       <p>Madam — your presence makes everything beautiful. Wishing you a year of boundless joy, love, and peace. With heartfelt gratitude, Mr Stark.</p>
       <div class="mt-6">
-        <a href="thankyou.html" class="btn-primary">Finish</a>
+        <a id="videoLink" href="video.html" class="btn-primary">Watch Final Surprise</a>
       </div>
     </div>
   </main>
@@ -66,6 +62,15 @@
       confetti({ particleCount: 150, spread: 150, origin: { y: 0.8 }, colors: ['#eecbff', '#a9f1df', '#f6d365', '#fda085', '#312e81'] });
       // Change the button icon
       document.getElementById('glowHeart').textContent = '❤️';
+    });
+
+    // *** NEW JAVASCRIPT FIX ***
+    // We explicitly use the helper function defined in script.js to navigate.
+    document.getElementById('videoLink').addEventListener('click', function(event) {
+        // Stop the default link action to ensure we stop any audio first
+        event.preventDefault(); 
+        // Use the global helper function (defined in script.js)
+        stopAudioAndNavigate(this.href); 
     });
   </script>
 </body>
