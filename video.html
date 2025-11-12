@@ -31,21 +31,67 @@
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
     </button>
 
-    <div class="hidden md:flex md:items-center md:space-x-4"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a><a href="video.html">Video</a></div>
-    <a href="index.html" class="text-sm font-bold z-20">Home</a>
+    <div class="hidden md:flex md:items-center md:space-x-4"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a></div>
+    <a href="index.html" class="text-sm font-bold z-50">Home</a>
   </nav>
 
-  <div id="nav-links" class="hidden mobile-nav"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a><a href="video.html">Video</a></div>
+  <div id="nav-links" class="hidden mobile-nav"><a href="memories.html">Memories</a><a href="wishes.html">Wishes</a><a href="funzone.html">Fun Zone</a><a href="surprise.html">Surprise</a></div>
   <main class="container mx-auto p-6 text-center">
     <h2 class="text-4xl script-heading">Your Special Video Message</h2>
     <p class="mt-4 text-gray-600">Watch the final surprise just for you.</p>
 
-    <div class="mt-8 w-full md:max-w-4xl mx-auto rounded-xl shadow-2xl overflow-hidden typed-message-container" style="background: rgba(0,0,0,0.8); border: none; padding: 0;">
-      <video id="surpriseVideo" controls preload="auto" playsinline style="width: 100%; height: auto; display: block;">
-        <source src="assets/video/Afusic - Pal Pal (Official Music Video) Prod. @AliSoomroMusic.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
+    <div class="mt-8 video-container">
+  <video id="surpriseVideo" controls preload="auto" playsinline>
+    <source src="assets/video/Birthdaywish.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<style>
+  /* 🎯 Final responsive video tuning — smaller, centered, clean */
+  .video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    max-width: 650px;   /* ⬅️ slightly smaller */
+    width: 90%;         /* ⬅️ adds side space */
+    padding: 8px;
+  }
+
+  .video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain !important;
+    max-height: 80vh;
+    border-radius: 14px;
+    background: #000;
+  }
+
+  @media (max-width: 768px) {
+    .video-container {
+      max-width: 95%;
+      border-radius: 12px;
+      padding: 5px;
+    }
+
+    .video-container video {
+      max-height: 70vh;
+      border-radius: 10px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .video-container {
+      max-width: 600px;  /* ⬅️ slightly narrower on large screens */
+    }
+  }
+</style>
+
     
     <div id="finishButtonContainer" class="mt-8 hidden">
       <p class="text-2xl script-heading mb-4">You reached the end! 💖</p>
